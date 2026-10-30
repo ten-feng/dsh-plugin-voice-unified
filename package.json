@@ -1,7 +1,7 @@
 {
   "name": "dsh-voice-unified",
-  "version": "1.5.4",
-  "description": "DSH 统一声音插件：多音色克隆与进化、按需语音回复、七种情感 TTS、翻唱换声直出、音乐缓存联动与管理界面。",
+  "version": "1.5.5",
+  "description": "DSH 统一声音插件：多音色克隆与进化、按需语音回复、七种情感 TTS、翻唱换声直出、音乐缓存联动与管理界面；内置男歌手/女歌手预设音色。",
   "type": "module",
   "main": "index.js",
   "exports": {

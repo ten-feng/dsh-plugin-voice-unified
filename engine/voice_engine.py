@@ -1001,8 +1001,21 @@ def cmd_separate(args) -> dict:
     )
     mask *= band[:, None]
     vocal_spec = mid * mask
-    inst_l_spec = ls - vocal_spec
-    inst_r_spec = rs - vocal_spec
+    # 软掩码 < 1 会把 (1-mask) 的原唱人声留在伴奏里，听起来就是"还有原唱"。
+    # 这里在伴奏侧多做一次人声估计的减法，把残留压掉；同时给每个频点留 12%
+    # 的底噪下限，避免减过头把伴奏挖出空洞（0.5 时人声频段约再降 4~6 dB）。
+    suppress = float(getattr(args, "vocal_suppress", 0.25) or 0.0)
+    suppress = max(0.0, min(1.0, suppress))
+
+    def _suppress_inst(channel_spec):
+        reduced = channel_spec - (1.0 + suppress) * vocal_spec
+        floor = np.abs(channel_spec) * 0.12
+        mag = np.maximum(np.abs(reduced), floor)
+        phase = np.where(np.abs(reduced) > 1e-9, reduced / np.maximum(np.abs(reduced), 1e-12), 1.0)
+        return mag * phase
+
+    inst_l_spec = _suppress_inst(ls)
+    inst_r_spec = _suppress_inst(rs)
     vocal = _istft_channel(vocal_spec, win, pad, padded_len, hop)[:length]
     inst_l = _istft_channel(inst_l_spec, win, pad, padded_len, hop)[:length]
     inst_r = _istft_channel(inst_r_spec, win, pad, padded_len, hop)[:length]
@@ -1025,6 +1038,7 @@ def cmd_separate(args) -> dict:
         "vocal": args.vocal_out,
         "instrumental": args.inst_out,
         "maskMean": round(float(np.mean(mask)), 4),
+        "vocalSuppress": round(suppress, 3),
         "peak": round(_peak(np.stack([inst_l, inst_r], axis=1)), 5),
     }
 
@@ -1456,6 +1470,12 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--input", required=True)
     p.add_argument("--vocal-out", required=True)
     p.add_argument("--inst-out", required=True)
+    p.add_argument(
+        "--vocal-suppress",
+        type=float,
+        default=0.25,
+        help="伴奏里额外抵消的人声比例（0=只做掩码，0.25=再压一层原唱残留）",
+    )
     p.add_argument("--json", dest="json_path", default="")
     p.set_defaults(func=cmd_separate)
 
