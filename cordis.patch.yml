@@ -1,0 +1,6 @@
+# dsh-voice-unified bundle for DeepSeek Harness.
+# Installed into a profile with:
+#   dsh plugin --profile desktop add link:/abs/path/dsh-voice-unified
+- insert:
+    - id: voice-unified
+      name: dsh-voice-unified

@@ -1,0 +1,13 @@
+{
+  "songName": "晚风里的旋律（示例）",
+  "duration": 20.0,
+  "sampleRate": 24000,
+  "vocal": {
+    "position": "center",
+    "start": 1.2,
+    "end": 18.4,
+    "description": "人声位于左右声道正中，伴奏左右声场不同（左：琶音/沙锤，右：铺底和弦）"
+  },
+  "file": "examples/demo/demo-original.wav",
+  "description": "纯 numpy 共振峰合成生成，可复现；仅用于本地验收。"
+}

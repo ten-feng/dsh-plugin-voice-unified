@@ -1,0 +1,18 @@
+dsh-voice-unified bundles a Windows build of FFmpeg.
+
+File: bin/ffmpeg.exe
+Version: FFmpeg 3.0.1 (built with GCC 5.3.0)
+License: GNU General Public License v3 (GPLv3), because the build enables
+GPL components (--enable-gpl --enable-version3).
+
+FFmpeg is Copyright (c) 2000-2016 the FFmpeg developers.
+Project: https://ffmpeg.org/
+Source code for the exact version: https://ffmpeg.org/releases/ffmpeg-3.0.1.tar.xz
+License text: https://www.gnu.org/licenses/gpl-3.0.html
+
+The plugin invokes ffmpeg as a separate executable for decoding, encoding and
+basic filtering. It does not link FFmpeg libraries into the plugin code.
+
+If you redistribute this package, keep this notice and comply with GPLv3
+(including making the corresponding source available). To use a different
+FFmpeg build, set DSH_VOICE_FFMPEG to its path and remove bin/ffmpeg.exe.

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>dsh-voice-unified drag harness</title>
+  <style>html,body{margin:0;height:100%;background:#111;color:#eee;font-family:sans-serif}#log{position:fixed;right:8px;top:8px;font-size:12px;color:#8f8}</style>
+</head>
+<body>
+  <div id="log"></div>
+  <script>
+    window.__ModuleLoader__ = {
+      load(registration) {
+        window.__voiceRegistration = registration
+        const fakeReact = null
+        const require = (name) => {
+          if (name === 'react') return fakeReact
+          throw new Error('unexpected require ' + name)
+        }
+        try {
+          window.__voiceExports = registration.factory(require)
+          const sections = []
+          const ctx = {
+            slots: {
+              inject(_name, fn) { fn() },
+              register(options) { sections.push({ id: options.id, label: options.label && options.label() }); return () => {} },
+            },
+          }
+          window.__voiceExports.apply(ctx)
+          window.__voiceSections = sections
+          document.getElementById('log').textContent = 'APPLIED'
+        } catch (error) {
+          document.getElementById('log').textContent = 'ERROR ' + error.message
+          console.error(error)
+        }
+      }
+    }
+    window.fetch = async (url) => {
+      if (String(url).includes('/transcribe')) {
+        return new Response(JSON.stringify({ ok: true, text: '雨纷飞，飞在天空里是我的眼泪。', source: 'stored' }), { headers: { 'content-type': 'application/json' } })
+      }
+      return new Response(JSON.stringify({ ok: true, profiles: [], settings: {}, jobs: [], entries: [], directories: [] }), { headers: { 'content-type': 'application/json' } })
+    }
+  </script>
+  <script src="/client.js"></script>
+</body>
+</html>
