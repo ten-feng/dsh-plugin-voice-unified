@@ -1008,11 +1008,12 @@ def cmd_separate(args) -> dict:
     suppress = max(0.0, min(1.0, suppress))
 
     def _suppress_inst(channel_spec):
-        reduced = channel_spec - (1.0 + suppress) * vocal_spec
-        floor = np.abs(channel_spec) * 0.12
-        mag = np.maximum(np.abs(reduced), floor)
-        phase = np.where(np.abs(reduced) > 1e-9, reduced / np.maximum(np.abs(reduced), 1e-12), 1.0)
-        return mag * phase
+        # Cancel the estimated center component up to 100%. Unlike a partial
+        # magnitude subtraction, capping the gain at 1.0 avoids re-adding a
+        # 12% floor of the original vocal (which is audible as "still the
+        # original singer" on sparse arrangements).
+        center_gain = np.clip(mask * (1.0 + suppress), 0.0, 1.0)
+        return channel_spec - mid * center_gain
 
     inst_l_spec = _suppress_inst(ls)
     inst_r_spec = _suppress_inst(rs)
