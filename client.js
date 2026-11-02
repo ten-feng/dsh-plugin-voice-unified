@@ -609,30 +609,30 @@ window.__ModuleLoader__.load({
 .dshv-vplayer audio{display:none}
 
 /* 微信式语音消息气泡 */
-.dshv-wx-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:3px;margin:4px 0;max-width:280px}
-.dshv-wx-voice{position:relative;display:inline-flex;align-items:center;gap:9px;min-height:40px;max-width:260px;
-  padding:8px 13px 8px 11px;border:none;border-radius:18px;background:#95ec69;color:#101010;
-  font:14px/1.3 system-ui,-apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+.dshv-wx-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:3px;margin:3px 0;max-width:240px}
+.dshv-wx-voice{position:relative;display:inline-flex;align-items:center;gap:7px;min-height:30px;max-width:200px;
+  padding:6px 10px 6px 8px;border:none;border-radius:15px;background:#95ec69;color:#101010;
+  font:12.5px/1.25 system-ui,-apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
   cursor:pointer;text-align:left;box-shadow:0 1px 2px rgba(0,0,0,.10);
   transition:filter .15s ease,transform .15s ease;animation:dshv-in .2s ease both}
-.dshv-wx-voice::before{content:'';position:absolute;left:-6px;top:14px;width:0;height:0;
-  border-top:6px solid transparent;border-bottom:6px solid transparent;border-right:7px solid #95ec69}
+.dshv-wx-voice::before{content:'';position:absolute;left:-5px;top:11px;width:0;height:0;
+  border-top:5px solid transparent;border-bottom:5px solid transparent;border-right:6px solid #95ec69}
 .dshv-wx-voice:hover{filter:brightness(.97)}
 .dshv-wx-voice:active{transform:scale(.98)}
-.dshv-wx-voice .dshv-wx-icon{width:22px;height:22px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#101010}
-.dshv-wx-voice .dshv-wx-icon svg{width:20px;height:20px;display:block}
-.dshv-wx-bars{display:inline-flex;align-items:center;gap:3px;height:18px;flex:0 0 auto}
-.dshv-wx-bars i{display:block;width:3px;border-radius:2px;background:currentColor;opacity:.55;height:7px}
-.dshv-wx-bars i:nth-child(2){height:13px}
-.dshv-wx-bars i:nth-child(3){height:9px}
-.dshv-wx-bars i:nth-child(4){height:15px}
-.dshv-wx-bars i:nth-child(5){height:8px}
+.dshv-wx-voice .dshv-wx-icon{width:17px;height:17px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#101010}
+.dshv-wx-voice .dshv-wx-icon svg{width:15px;height:15px;display:block}
+.dshv-wx-bars{display:inline-flex;align-items:center;gap:2px;height:13px;flex:0 0 auto}
+.dshv-wx-bars i{display:block;width:2px;border-radius:2px;background:currentColor;opacity:.55;height:5px}
+.dshv-wx-bars i:nth-child(2){height:9px}
+.dshv-wx-bars i:nth-child(3){height:6px}
+.dshv-wx-bars i:nth-child(4){height:10px}
+.dshv-wx-bars i:nth-child(5){height:5px}
 .dshv-wx-voice.is-playing .dshv-wx-bars i{animation:dshv-wx-wave .75s ease-in-out infinite;opacity:.8}
 .dshv-wx-voice.is-playing .dshv-wx-bars i:nth-child(2){animation-delay:.12s}
 .dshv-wx-voice.is-playing .dshv-wx-bars i:nth-child(3){animation-delay:.24s}
 .dshv-wx-voice.is-playing .dshv-wx-bars i:nth-child(4){animation-delay:.36s}
 .dshv-wx-voice.is-playing .dshv-wx-bars i:nth-child(5){animation-delay:.48s}
-.dshv-wx-duration{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;margin-left:1px}
+.dshv-wx-duration{font-size:11.5px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;margin-left:1px}
 .dshv-wx-voice audio{display:none}
 .dshv-wx-err{font-size:11px;line-height:15px;color:var(--dsw-alias-state-error-primary,#d54941);padding-left:4px}
 @keyframes dshv-wx-wave{0%,100%{transform:scaleY(.6)}50%{transform:scaleY(1.25)}}
@@ -2632,7 +2632,7 @@ window.__ModuleLoader__.load({
       wrap.setAttribute('data-voice-reply-id', spec.voiceReplyId)
       if (spec.title) wrap.title = spec.title
       const seconds = Math.max(1, Number(spec.duration) || 1)
-      const bubbleWidth = Math.round(Math.max(96, Math.min(238, 96 + seconds * 4.6)))
+      const bubbleWidth = Math.round(Math.max(64, Math.min(170, 64 + seconds * 2.6)))
       const bubble = h('button', 'dshv-wx-voice')
       bubble.type = 'button'
       bubble.style.width = bubbleWidth + 'px'
